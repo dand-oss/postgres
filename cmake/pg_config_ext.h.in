@@ -1,0 +1,12 @@
+/*
+ * pg_config_ext.h, generated from cmake/pg_config_ext.h.in (meson parity:
+ * src/include/pg_config_ext.h.meson only defines PG_INT64_TYPE).
+ */
+
+#ifndef PG_CONFIG_EXT_H
+#define PG_CONFIG_EXT_H
+
+/* Define to the name of a signed 64-bit integer type. */
+#define PG_INT64_TYPE @PG_INT64_TYPE@
+
+#endif							/* PG_CONFIG_EXT_H */

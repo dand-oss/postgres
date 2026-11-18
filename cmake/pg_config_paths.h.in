@@ -1,0 +1,17 @@
+/*
+ * pg_config_paths.h, generated from cmake/pg_config_paths.h.in.
+ * Mirrors the config_paths_data block in meson.build.
+ */
+
+#define PGBINDIR "@PG_PATH_BIN@"
+#define PGSHAREDIR "@PG_PATH_SHARE@"
+#define SYSCONFDIR "@PG_PATH_SYSCONF@"
+#define INCLUDEDIR "@PG_PATH_INCLUDE@"
+#define PKGINCLUDEDIR "@PG_PATH_INCLUDE@"
+#define INCLUDEDIRSERVER "@PG_PATH_INCLUDE_SERVER@"
+#define LIBDIR "@PG_PATH_LIB@"
+#define PKGLIBDIR "@PG_PATH_LIB@"
+#define LOCALEDIR "@PG_PATH_LOCALE@"
+#define DOCDIR "@PG_PATH_DOC@"
+#define HTMLDIR "@PG_PATH_DOC@"
+#define MANDIR "@PG_PATH_MAN@"
