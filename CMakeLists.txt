@@ -46,7 +46,15 @@ message(STATUS "PostgreSQL ${PG_VERSION} (PG_VERSION_NUM ${PG_VERSION_NUM})")
 # ---------------------------------------------------------------------------
 # errcodes.h and kwlist_d.h are produced by Perl generators in the source tree.
 find_package(Perl REQUIRED)
-find_package(OpenSSL REQUIRED)
+# OpenSSL: the ASV ssl-jp port (3.5.8, -asv DLL names) under the ports prefix.
+# ASV_PLAT_PORTS comes from the ports build environment.
+set(_pg_ports_dir "$ENV{ASV_PLAT_PORTS}")
+if(_pg_ports_dir AND EXISTS "${_pg_ports_dir}/ssl-jp/lib/cmake/OpenSSL/OpenSSLConfig.cmake")
+    find_package(OpenSSL 3.5.8 EXACT CONFIG REQUIRED
+        PATHS "${_pg_ports_dir}/ssl-jp" NO_DEFAULT_PATH)
+else()
+    find_package(OpenSSL REQUIRED)
+endif()
 
 # Windows system libraries libpq needs (meson: os_deps ws2_32, libpq_deps secur32).
 add_library(pg_win_syslibs INTERFACE)
