@@ -375,6 +375,12 @@ target_link_libraries(libpq
         pg_win_syslibs)
 add_dependencies(libpq pg_generated_headers)
 
+# Debug libs get a _d suffix (libpq_d.lib etc.) so the Debug (/MDd) and
+# Release (/MD) builds do not overwrite each other in the shared install
+# prefix. Release names are unchanged (no OUTPUT_NAME is set on these targets).
+set_target_properties(libpq pgcommon_shlib pgport_shlib PROPERTIES
+    DEBUG_POSTFIX "_d")
+
 # ---------------------------------------------------------------------------
 # Install: headers that find_package(PostgreSQL) and consumers need, and libs
 # ---------------------------------------------------------------------------
