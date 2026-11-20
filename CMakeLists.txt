@@ -18,6 +18,13 @@ cmake_minimum_required(VERSION 3.20)
 
 project(postgres_libpq_win LANGUAGES C)
 
+###############
+# ASI default settings
+list(APPEND CMAKE_MODULE_PATH "$ENV{ASV_CMAKE}")
+include(asv_cmake_defaults)
+asv_cmake_defaults( )
+###############
+
 # Ninja Multi-Config: the ports build runs a bare "ninja install", which only
 # builds and installs the default configuration (Debug) unless every
 # configuration is a default one. Build and install genuine Debug (_d) and
