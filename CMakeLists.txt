@@ -18,6 +18,17 @@ cmake_minimum_required(VERSION 3.20)
 
 project(postgres_libpq_win LANGUAGES C)
 
+# Ninja Multi-Config: the ports build runs a bare "ninja install", which only
+# builds and installs the default configuration (Debug) unless every
+# configuration is a default one. Build and install genuine Debug (_d) and
+# Release libraries, as the ASV ports defaults do for the other ports.
+if(CMAKE_GENERATOR STREQUAL "Ninja Multi-Config")
+    set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
+    set(CMAKE_CROSS_CONFIGS "Release;Debug" CACHE STRING "Configurations that can be built")
+    set(CMAKE_DEFAULT_CONFIGS "all" CACHE STRING "Configurations built by default")
+    set(CMAKE_DEFAULT_BUILD_TYPE "Release" CACHE STRING "build.ninja default configuration")
+endif()
+
 if(NOT CMAKE_SYSTEM_NAME STREQUAL "Windows")
     message(FATAL_ERROR "postgres_libpq_win targets Windows only (CMAKE_SYSTEM_NAME=${CMAKE_SYSTEM_NAME})")
 endif()
