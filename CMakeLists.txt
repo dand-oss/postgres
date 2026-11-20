@@ -411,5 +411,30 @@ install(FILES
     "${PG_GEN_INC}/pg_config_os.h"
     DESTINATION include)
 
-install(TARGETS libpq pgcommon_shlib pgport_shlib
+# Consumers include the installed headers through the exported target.
+target_include_directories(libpq INTERFACE $<INSTALL_INTERFACE:include>)
+
+# CMake package: find_package(libpq CONFIG) gives libpq::libpq, which carries
+# pgcommon/pgport, the ports OpenSSL and the Windows system libraries, with
+# Debug (_d) and Release libraries per configuration.
+install(TARGETS libpq pgcommon_shlib pgport_shlib pg_win_syslibs
+    EXPORT libpqTargets
     ARCHIVE DESTINATION lib)
+install(EXPORT libpqTargets
+    FILE libpqTargets.cmake
+    NAMESPACE libpq::
+    DESTINATION lib/cmake/libpq)
+
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+    "${CMAKE_CURRENT_BINARY_DIR}/libpqConfigVersion.cmake"
+    VERSION ${PG_VERSION}
+    COMPATIBILITY SameMajorVersion)
+configure_package_config_file(
+    "${PG_SRC}/cmake/libpqConfig.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/libpqConfig.cmake"
+    INSTALL_DESTINATION lib/cmake/libpq)
+install(FILES
+    "${CMAKE_CURRENT_BINARY_DIR}/libpqConfig.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/libpqConfigVersion.cmake"
+    DESTINATION lib/cmake/libpq)

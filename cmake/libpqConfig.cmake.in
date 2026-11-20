@@ -1,0 +1,12 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+
+# libpq links the ASV ssl-jp port (3.5.8, -asv DLL names), installed next to
+# this package in the platform ports prefix.
+find_dependency(OpenSSL 3.5.8 EXACT CONFIG
+    PATHS "${PACKAGE_PREFIX_DIR}/../ssl-jp" NO_DEFAULT_PATH)
+
+include("${CMAKE_CURRENT_LIST_DIR}/libpqTargets.cmake")
+
+check_required_components(libpq)
